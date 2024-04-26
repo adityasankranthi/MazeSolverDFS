@@ -57,7 +57,8 @@ public class Maze {
 	 * @exception IllegalArgumentException if coordinates out of range.
 	 */
 	public boolean isOpenLeft(int i, int j) {
-		return false; // TODO: implement this method.
+	    checkCell(i, j);
+	    return (i == rows - 1 && j == 0) || (j > 0 && copen[i][j - 1]);
 	}
 	
 	/**
@@ -68,7 +69,8 @@ public class Maze {
 	 * @exception IllegalArgumentException if coordinates out of range.
 	 */
 	public boolean isOpenRight(int i, int j) {
-		return false; // TODO: implement this method.
+	    checkCell(i, j);
+	    return j < columns - 1 && copen[i][j];
 	}
 	
 	/**
@@ -81,7 +83,8 @@ public class Maze {
 	 * @exception IllegalArgumentException if coordinates out of range.
 	 */
 	public boolean isOpenUp(int i, int j) {
-		return false; // TODO: implement this method.
+	    checkCell(i, j);
+	    return (i == 0 && j == columns - 1) || (i > 0 && ropen[i - 1][j]);
 	}
 	
 	/**
@@ -92,7 +95,8 @@ public class Maze {
 	 * @exception IllegalArgumentException if coordinates out of range.
 	 */
 	public boolean isOpenDown(int i, int j) {
-		return false; // TODO: implement this method.
+	    checkCell(i, j);
+	    return i < rows - 1 && ropen[i][j];
 	}
 	
 	
