@@ -8,19 +8,22 @@ This is a homework assignment at University of Wisconsin-Milwaukee.
 ### Focus
 
 #### What is this homework assignment about?
+the homework is about implementing “depth-first search”, Reading and Writing Mazes, and then display them on the screen.
 
 ### Gather
 
 #### What do I know?  What do I need to know that's new?
+I got the theoretical concepts figured, I need to clear myselt about the printWriter mentioned in the code.
 
 ### Brainstorm
 
 #### What are some ideas for solving this homework assignment?
+Drawing each and every maze is a must while getting started, because drawing would make it easier
 
 ### Plan
 
 #### What will I work on first after I finish this planning part?
-
+as usual following the what you need to do.
 
 *The preceding steps should be completed and committed by the
 Friday 10pm deadline.*
