@@ -130,13 +130,38 @@ public class Maze {
 	 * </pre>
 	 * @param r buffered reader to read lines from
 	 * @throws IOException if a problem happens with reading
-	 * @throws ParseException if the maze is badly formatted.
+	 * @throws ParseException if the maze is badly formatted. 
 	 * (The implementation is also permitted to simply overlook 
 	 * format errors)
 	 */
 	public void read(BufferedReader r) throws IOException {
-		// TODO: Implement this method
+	    r.readLine(); 
+	    String line;
+	    for (int i = 0; i < rows; i++) {
+	        line = r.readLine(); 
+	        if (line == null) throw new IOException("vertical line not found.");
+	        if (i < rows) {
+	            for (int j = 0; j < columns - 1; j++) {
+	                int index = 2 * j + 2; 
+	                if (index < line.length()) {
+	                    copen[i][j] = (line.charAt(index) == ' ');
+	                } 
+	            }
+	        }
+	        if (i < rows - 1) {
+	            line = r.readLine();
+	            if (line == null) throw new IOException("horizontal line not found.");
+	            for (int j = 0; j < columns; j++) {
+	                int index = 2 * j + 1; 
+	                if (index < line.length()) {
+	                    ropen[i][j] = (line.charAt(index) == ' ');
+	                } 
+	            }
+	        }
+	    }
 	}
+
+
 	
 	/**
 	 * Write out the maze in a specific textual and human readable form.
@@ -154,7 +179,7 @@ public class Maze {
 	 * @param pw print writer to write to, must not be null
 	 */
 	public void write(PrintWriter pw) {
-		// TODO: Print this maze using the same format read expects
+
 	}
 
 	
