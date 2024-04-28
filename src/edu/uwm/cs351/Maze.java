@@ -179,7 +179,48 @@ public class Maze {
 	 * @param pw print writer to write to, must not be null
 	 */
 	public void write(PrintWriter pw) {
-
+	    for (int j = 0; j < columns; j++) {
+	        if (j == columns - 1) {
+	            pw.print("+ +");
+	        } else {
+	            pw.print("+-");
+	        }
+	    }
+	    pw.println();
+	    for (int i = 0; i < rows; i++) {
+	        if (i == rows - 1) {
+	            pw.print(" ");
+	        } 
+	        else {
+	            pw.print("|");
+	        }
+	        for (int j = 0; j < columns - 1; j++) {
+	            pw.print(" ");
+	            if (copen[i][j]) {
+	                pw.print(" ");
+	            } 
+	            else {
+	                pw.print("|");
+	            }
+	        }
+	        pw.println(" |");
+	        if (i < rows - 1) {
+	            pw.print("+");
+	            for (int j = 0; j < columns; j++) {
+	                if (ropen[i][j]) {
+	                    pw.print(" +");
+	                } 
+	                else {
+	                    pw.print("-+");
+	                }
+	            }
+	            pw.println();
+	        }
+	    }
+	    pw.print("+");
+	    for (int j = 0; j < columns; j++) {
+	        pw.print("-+");
+	    }
 	}
 
 	
