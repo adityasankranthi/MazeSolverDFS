@@ -33,15 +33,18 @@ Friday 10pm deadline.*
 ### Review
 
 #### Did I correctly anticipate the difficulties?
+for the most part yes, I was able to anticipate the difficulties well. reading and writing input files was a bit unfamiliar so I worked on them as anticipated.
 
 #### How did the plan go?
+the plan went well, I followed the what to do module and learned about printWirter and Buffered reader before I started.
 
 ### Preview
 
 #### What should I do differently for next week's homework assignment?
+Start early and clear concepts if in doubt as soon as possible.
 
 #### Do I need more resources?
-
+No, I did not need any additional resources other than the textbook, and online documentation. 
 ## Optional Feedback
 
 ### Comments (optional)
