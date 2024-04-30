@@ -7,40 +7,94 @@ import java.util.Stack;
 
 import edu.uwm.cs351.Maze.Cell;
 
-/**
- * Try to solve a maze.
- */
 public class MazeSolver {
-	private final Maze maze;
-	private Stack<Maze.Cell> pending = new Stack<Cell>();
-	private Cell[][] visited;
-	
-	/**
-	 * Create a maze solver for this maze.
-	 * @param m maze to solve, must not be null
-	 */
-	public MazeSolver(Maze m) {
-		maze = m;
-		visited = new Cell[maze.rows()][maze.columns()];
-	}
+    private final Maze maze;
+    private Stack<Maze.Cell> stack = new Stack<Cell>();
+    private Cell[][] parent;
 
-	/**
-	 * Try to find a path, and return a solution display:
-	 * either a path solution display, if a path was found,
-	 * or a visited solution display if no path was found.
-	 * @return solution display (must not be null)
-	 */
-	public SolutionDisplay findPath() {
-		int rows = maze.rows();
-		int columns = maze.columns();
-		// TODO: Look for a path using depth-first search.
-		// If one is found, return a PathSolutionDIsplay.
-		
-		// Otherwise, we return a display that shows what 
-		// we visited;
-		boolean[][] marked = new boolean[rows][columns];
-		// TODO: initialize the "marked" array with visited information
-		return new VisitedSolutionDisplay(maze,marked);
-	}
-	// Our solution uses a helper method to avoid repeating code.  This is optional.
+    public MazeSolver(Maze m) {
+        maze = m;
+        parent = new Cell[maze.rows()][maze.columns()];
+    }
+
+    public SolutionDisplay findPath() {
+        int rows = maze.rows();
+        int columns = maze.columns();
+
+        boolean[][] marked = new boolean[rows][columns];
+        stack.push(maze.makeCell(rows - 1, 0));
+        marked[maze.makeCell(rows - 1, 0).row][maze.makeCell(rows - 1, 0).column] = true;
+
+        while (!stack.isEmpty()) {
+            Cell current = stack.pop();
+
+            if (current.equals(maze.makeCell(0, columns - 1))) {
+                return new PathSolutionDisplay(maze, retrieve(maze.makeCell(0, columns - 1)));
+            }
+
+            List<Cell> neighbors = new ArrayList<>();
+
+            if (current.column < columns - 1 ) {
+            addRightNeighbor(current, marked, neighbors);
+            }
+            if (current.row < rows - 1 ) {
+            addDownNeighbor(current, marked, neighbors);
+            }
+            if (current.column > 0 ) {
+            addLeftNeighbor(current, marked, neighbors);
+            }
+            if (current.row > 0) {
+            addUpNeighbor(current, marked, neighbors);
+            }
+            
+            Collections.reverse(neighbors);
+            for (Cell neighbor : neighbors) {
+                stack.push(neighbor);
+                parent[neighbor.row][neighbor.column] = current;
+            }
+        }
+        return new VisitedSolutionDisplay(maze, marked);
+    }
+
+    private void addRightNeighbor(Cell current, boolean[][] marked, List<Cell> neighbors) {
+    	if (maze.isOpenRight(current.row, current.column) && !marked[current.row][current.column + 1]) {
+            neighbors.add(maze.makeCell(current.row, current.column + 1));
+            marked[current.row][current.column + 1] = true;
+        }
+    }
+
+    private void addDownNeighbor(Cell current, boolean[][] marked, List<Cell> neighbors) {
+    	if (maze.isOpenDown(current.row, current.column) && !marked[current.row + 1][current.column]) {
+            neighbors.add(maze.makeCell(current.row + 1, current.column));
+            marked[current.row + 1][current.column] = true;
+    	}
+    }
+
+    private void addLeftNeighbor(Cell current, boolean[][] marked, List<Cell> neighbors) {
+    	if (maze.isOpenLeft(current.row, current.column) && !marked[current.row][current.column - 1]) {
+            neighbors.add(maze.makeCell(current.row, current.column - 1));
+            marked[current.row][current.column - 1] = true;
+        }
+    }
+
+    private void addUpNeighbor(Cell current, boolean[][] marked, List<Cell> neighbors) {
+    	if (maze.isOpenUp(current.row, current.column) && !marked[current.row - 1][current.column]) {
+            neighbors.add(maze.makeCell(current.row - 1, current.column));
+            marked[current.row - 1][current.column] = true;
+        }
+    }
+
+    private List<Cell> retrieve(Cell end) {
+        List<Cell> path = new ArrayList<>();
+        Cell at = end;
+        while (at != null) {
+            path.add(at);
+            if (at.equals(maze.makeCell(maze.rows() - 1, 0))) {
+                break;
+            }
+            at = parent[at.row][at.column];
+        }
+        Collections.reverse(path);
+        return path;
+    }
 }
